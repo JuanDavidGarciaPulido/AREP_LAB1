@@ -99,15 +99,5 @@ class ClientHandler implements Runnable {
         return fileData;
     }
 
-    private void printRequestHeader( String requestLine,int BufferedReader ){
-        System.out.println("Request line "+requestLine);
-        String inputLine = "";
-        while ((inputLine = in.readLine()) != null) {
-            System.out.println("Received: " + inputLine);
-            if (!in.ready()) {
-                break;
-            }
-            }
 
-        }
 }
