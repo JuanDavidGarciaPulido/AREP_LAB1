@@ -11,17 +11,48 @@ import java.util.concurrent.*;
 public class SimpleWebServer {
     private static final int PORT = 8080;
     public static final String WEB_ROOT = "src/main/webroot";
+    private ExecutorService threadPool;
+    private ServerSocket serverSocket;
 
-    public static void main(String[] args) throws IOException {
-        ExecutorService threadPool = Executors.newFixedThreadPool(10);
-        ServerSocket serverSocket = new ServerSocket(PORT);
+    public SimpleWebServer() throws IOException {
+        this.threadPool = Executors.newFixedThreadPool(10);
+        this.serverSocket = new ServerSocket(PORT);
+    }
 
-        while (true) {
+    public void start() throws IOException {
+        while (!serverSocket.isClosed()) {
             Socket clientSocket = serverSocket.accept();
             threadPool.submit(new ClientHandler(clientSocket));
         }
     }
+
+    public void stop() throws IOException {
+        serverSocket.close();
+        threadPool.shutdown();
+    }
+
+    public boolean isRunning() {
+        return !serverSocket.isClosed();
+    }
+
+    public int getPort() {
+        return serverSocket.getLocalPort();
+    }
+
+    public ExecutorService getThreadPool() {
+        return threadPool;
+    }
+
+    public ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+
+    public static void main(String[] args) throws IOException {
+        SimpleWebServer server = new SimpleWebServer();
+        server.start();
+    }
 }
+
 
 class ClientHandler implements Runnable {
     private Socket clientSocket;
@@ -53,36 +84,32 @@ class ClientHandler implements Runnable {
         }
     }
 
-    private void handlePostRequest(String fileRequested, BufferedReader in, PrintWriter out) throws IOException {
+    public void handlePostRequest(String fileRequested, BufferedReader in, PrintWriter out) throws IOException {
         StringBuilder payload = new StringBuilder();
         String line;
 
-
         while (!(line = in.readLine()).isEmpty()) {
         }
-
-
         while (in.ready() && (line = in.readLine()) != null) {
             payload.append(line);
         }
 
         String body = payload.toString();
 
-
         String fileName = "PosiblesFrutas.txt";
-        try (FileWriter fileWriter = new FileWriter(new File(SimpleWebServer.WEB_ROOT, fileName))) {
-            fileWriter.write(body);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File(SimpleWebServer.WEB_ROOT, fileName), true))) {
+            writer.write(body);
+            writer.newLine();
         }
-
 
         out.println("HTTP/1.1 200 OK");
         out.println("Content-Type: text/plain");
         out.println();
-        out.println("File created: " + fileName);
+        out.println("Se han añadido las nuevas frutas");
         out.flush();
     }
 
-    private void handleGetRequest(String fileRequested, PrintWriter out, BufferedOutputStream dataOut) throws IOException {
+    public void handleGetRequest(String fileRequested, PrintWriter out, BufferedOutputStream dataOut) throws IOException {
         File file = new File(SimpleWebServer.WEB_ROOT, fileRequested);
         int fileLength = (int) file.length();
         String content = getContentType(fileRequested);

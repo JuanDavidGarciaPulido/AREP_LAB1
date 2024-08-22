@@ -36,7 +36,7 @@ Before install and run the project you will need:
     ```
 
 3. **Access the Web Server**:
-   - Open a web browser and navigate to `http://localhost:8080`.
+   - Open a web browser and navigate to `http://localhost:8080/index.html`.
    - The server will serve files from the `src/main/webroot` directory.
 
 ## Configuration
