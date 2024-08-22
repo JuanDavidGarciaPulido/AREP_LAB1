@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 Before install and run the project you will need:
 
-1. **Java** (versions 7 or 8)
+1. **Java** (version 21)
 
 
 2. **Maven**
@@ -26,16 +26,53 @@ Before install and run the project you will need:
     ```sh
     git clone https://github.com/JuanDavidGarciaPulido/AREP_LAB1.git
 
-    cd Concurrencia
+    cd AREP_LAB1
     ```
 
-2. Build the project:
+2. Compile and run the server:
     ```sh
-    mvn package
+   javac -d bin src/main/java/edu/escuelaing/arep/app/SimpleWebServer.java
+   java -cp bin edu.escuelaing.arep.app.SimpleWebServer
     ```
 
-3. Run the application:
-    
+3. **Access the Web Server**:
+   - Open a web browser and navigate to `http://localhost:8080`.
+   - The server will serve files from the `src/main/webroot` directory.
+
+## Configuration
+- **Web Root Directory**: The server serves files from the `src/main/webroot/` directory by default.
+- **Port**: The server listens on port `8080` by default.
+- **Thread Pool**: The server uses a thread pool with a fixed size of 10 threads to handle concurrent requests.
+
+## Project Structure
+```
+SimpleWebServer/
+│
+├───src/
+│   ├───main/
+│   │   ├───java/
+│   │   │   └───edu/
+│   │   │       └───escuelaing/
+│   │   │           └───arep/
+│   │   │               │
+│   │   │               └───app/
+│   │   │                       └───SimpleWebServer.java
+│   │   └───webroot/
+│   │       ├───index.html
+│   │       ├───styles.css
+│   │       ├───app.js
+│   │       ├───manzanas.png
+│   │       └───... (other resources)
+│   └───test/
+│       └───java/
+│           └───edu/
+│               └───escuelaing/
+│                   └───arep/
+│                       └───app/
+```
+
+## Author
+This project was developed by Juan David García Pulido.
 
 
 
