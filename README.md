@@ -23,21 +23,28 @@ Before install and run the project you will need:
 ### Installing
 
 1. Clone the repository and navigate into the project directory:
-    ```sh
+    ```
     git clone https://github.com/JuanDavidGarciaPulido/AREP_LAB1.git
 
     cd AREP_LAB1
     ```
 
 2. Compile and run the server:
-    ```sh
+    ```
    javac -d bin src/main/java/edu/escuelaing/arep/app/SimpleWebServer.java
    java -cp bin edu.escuelaing.arep.app.SimpleWebServer
     ```
 
 3. **Access the Web Server**:
    - Open a web browser and navigate to `http://localhost:8080/index.html`.
-   - The server will serve files from the `src/main/webroot` directory.
+   - The server will serve files from the `src/main/webroot` directory (manzanas.png fresas.png limones.png).
+   - The names of the fruits you add will be saved in a TXT file.
+
+![image](https://github.com/user-attachments/assets/4229c4fe-32e5-43f8-ad0b-df3a61624c02)
+
+
+![image](https://github.com/user-attachments/assets/50d224bf-589e-4f41-8ff8-797dc4c616a7)
+
 
 ## Configuration
 - **Web Root Directory**: The server serves files from the `src/main/webroot/` directory by default.
@@ -70,9 +77,36 @@ SimpleWebServer/
 │                   └───arep/
 │                       └───app/
 ```
+## Running the tests
+![image](https://github.com/user-attachments/assets/8ceecffd-e590-49fb-bfb2-e469005ed340)
+
+### Test Descriptions
+
+#### 1. `testServerStartsOnCorrectPort()`
+Verifies that the server is configured to listen on the correct port (8080).
+
+#### 2. `testServerIsRunning()`
+Checks if the server is running and can correctly transition to a stopped state.
+
+#### 3. `testThreadPoolIsInitialized()`
+Ensures that the server’s thread pool is properly initialized and is not shut down.
+
+#### 4. `testServerSocketIsClosedAfterStop()`
+Confirms that the server's ServerSocket is closed after the server is stopped.
+
+## Built with
+* [Maven](https://maven.apache.org/) - Dependency management
+* [java](https://www.java.com/es/) - Programming language
 
 ## Author
 This project was developed by Juan David García Pulido.
 
+## Date
+
+Wednesday, August 21 - 2024
+
+## License
+
+This project is licensed under the GNU license; See the [LICENSE.txt](LICENSE.txt) file for details.
 
 
